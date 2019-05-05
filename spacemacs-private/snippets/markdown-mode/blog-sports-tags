@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: blog-sports-tags-world-cup
+# key: btswc
+# --
+sports, football, world-cup, wc-${1:`(format-time-string "%Y")`}

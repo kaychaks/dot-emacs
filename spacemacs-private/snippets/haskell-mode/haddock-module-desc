@@ -1,0 +1,17 @@
+# -*- mode: snippet -*-
+# name: haskell haddock module description
+# key: had.m
+# expand-env: ((yas-indent-line 'fixed))
+# --
+---------------------------------
+-- |
+-- Module      :  `(file-name-sans-extension (buffer-name))`
+-- Copyright   :  (C) Kaushik Chakraborty, `(format-time-string "%Y")`
+-- License     :  Apache v2 (see the file LICENSE)
+-- Maintainer  :  Kaushik Chakraborty <git@kaushikc.org>
+-- Stability   :  experimental
+--${1:
+-- ${2:description}
+--}
+---------------------------------
+$0
