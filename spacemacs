@@ -487,6 +487,10 @@ before packages are loaded."
 
   ;; (require 'beeminder)
 
+  (setq magit-repository-directories
+        '(("~/Developer/src/personal" . 1)
+          ("~/Developer/src/work" . 1)))
+
   ;; (direnv-mode)
   (global-company-mode)
   (global-set-key (kbd "S-SPC")
