@@ -131,6 +131,8 @@
         org-agenda-span 'day
         org-archive-location "TODO-archive::"
         org-archive-save-context-info (quote (time category itags))
+        org-reveal-root "file:///Users/kaushik/.local/share/revealjs"
+        org-re-reveal-root "file:///Users/kaushik/.local/share/revealjs"
         )
 
   (custom-config-org/org-capture-templates)

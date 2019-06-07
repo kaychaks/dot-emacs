@@ -46,7 +46,8 @@ This function should only modify configuration layer settings."
         markdown
         treemacs
         (org :variables
-		         org-enable-github-support nil)
+		         org-enable-github-support nil
+             org-enable-reveal-js-support t)
         (shell :variables
                shell-default-height 30
                shell-default-position 'bottom)
