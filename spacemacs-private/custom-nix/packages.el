@@ -52,7 +52,10 @@
     :binding "n"
     :body
     (progn
-      (find-file "~/Developer/src/personal/nix-config/darwin.nix")
-      (find-file-other-window "~/Developer/src/personal/nixpkgs/pkgs/top-level/all-packages.nix"))))
+      ;; (find-file "~/Developer/src/personal/nix-config/darwin.nix")
+      ;; (find-file-other-window "~/Developer/src/personal/nixpkgs/pkgs/top-level/all-packages.nix")))
+      (find-file "~/src/nix-config/precision/home.nix")
+      (find-file-other-window "~/src/nix-config/precision/default.nix")))
+)
 
 ;;; packages.el ends here

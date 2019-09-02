@@ -31,19 +31,21 @@
 
 (defconst custom-config-evil-packages
   '(evil
-    rainbow-identifiers)
-  )
+    ;;rainbow-identifiers
+   )
+)
 
 (defun custom-config-evil/post-init-evil ()
   (setq evil-search-module 'evil-search)
-  )
+)
 
 (defun custom-config-evil/init-rainbow-identifiers ()
-  (use-package rainbow-identifiers
-    :defer t))
+   ;; (use-package rainbow-identifiers
+   ;;   :defer t)
+)
 
 (defun custom-config-evil/post-init-rainbow-identifiers ()
-  (add-hook 'prog-mode-hook 'rainbow-identifiers-mode))
-
+  ;; (add-hook 'prog-mode-hook 'rainbow-identifiers-mode)
+)
 
 ;;; packages.el ends here

@@ -34,13 +34,15 @@
   )
 
 (defun custom-config-org/org-capture-templates ()
-  (setq org-capture-templates '(("m" "micro blog"
-                                 plain
-                                 (file (lambda ()
-                                         (expand-file-name (concat (format-time-string "%Y%m%d%H%M%S")
-                                                                   ".md")
-                                                           "~/Developer/src/personal/blog-hakyll/micro-posts/")))
-                                 "---\npublished : %<%Y-%m-%d %H:%M:%S%z>\n---\n\n%c%?")
+  (setq org-capture-templates '(
+                                ;; ("m" "micro blog"
+                                ;;  plain
+                                ;;  (file (lambda ()
+                                ;;          (expand-file-name (concat (format-time-string "%Y%m%d%H%M%S")
+                                ;;                                    ".md")
+                                ;;                            "~/Developer/src/personal/blog-hakyll/micro-posts/")))
+                                ;;  "---\npublished : %<%Y-%m-%d %H:%M:%S%z>\n---\n\n%c%?")
+
                                 ("n" "new note"
                                  item
                                  (file (lambda ()
@@ -49,6 +51,7 @@
                                                                    ".org")
                                                            org-directory)))
                                  "****  \n- %?")
+
                                 ;; ("p" "new day plan"
                                 ;;  plain
                                 ;;  (file (lambda ()
@@ -57,6 +60,7 @@
                                 ;;                                    ".org")
                                 ;;                            "~/Documents/Org-Notes/Plans/")))
                                 ;;  "#+FILETAGS: planning daily\n* %^{item}\n  %^{date}T\n  - %?\n")
+
                                 ("t" "new todo"
                                  entry
                                  (file+headline "" "Tasks")
@@ -100,15 +104,21 @@
 
 (defun custom-config-org/post-init-org ()
   (setq
-        org-directory "/Users/kaushik/Documents/Org-Notes/"
+        ;; org-directory "/Users/kaushik/Documents/Org-Notes/"
+        org-directory "~/src/org-notes"
 
-        org-default-notes-file "/Users/kaushik/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/Org-Notes/todo.org"
+        ;; org-default-notes-file "/Users/kaushik/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/Org-Notes/todo.org"
+        org-default-notes-file (concat org-directory "/todo.org")
+
+        ;; org-agenda-files '(
+        ;;                    "/Users/kaushik/Documents/Org-Notes/"
+        ;;                    "/Users/kaushik/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/Org-Notes/todo.org"
+        ;;                    )
 
         org-agenda-files '(
-                           "/Users/kaushik/Documents/Org-Notes/"
-                           "/Users/kaushik/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/Org-Notes/todo.org"
+                           (org-directory)
+                           (org-default-notes-file)
                            )
-
         org-todo-keywords '((sequence
                              "TODO(t)"
                              "STARTED(s@/!)"
