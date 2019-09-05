@@ -105,7 +105,7 @@
 (defun custom-config-org/post-init-org ()
   (setq
         ;; org-directory "/Users/kaushik/Documents/Org-Notes/"
-        org-directory "~/src/org-notes"
+        org-directory "~/Document/org-notes"
 
         ;; org-default-notes-file "/Users/kaushik/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/Org-Notes/todo.org"
         org-default-notes-file (concat org-directory "/todo.org")
