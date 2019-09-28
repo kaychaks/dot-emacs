@@ -1,0 +1,3 @@
+[submodule "spacemacs-private/hie-nix"]
+	path = spacemacs-private/hie-nix
+	url = https://github.com/benkolera/spacemacs-hie-nix.git

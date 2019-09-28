@@ -32,11 +32,33 @@
 (defconst custom-config-evil-packages
   '(evil
     ;;rainbow-identifiers
+    ispell
+    company
+    elfeed
    )
 )
 
 (defun custom-config-evil/post-init-evil ()
   (setq evil-search-module 'evil-search)
+)
+
+(defun custom-config-evil/post-init-ispell ()
+  (setq ispell-program-name "/run/current-system/sw/bin/aspell")
+)
+
+(defun custom-config-evil/post-init-company ()
+  (global-company-mode)
+  (global-set-key (kbd "S-SPC")
+                  #'company-complete)
+)
+
+(defun custom-config-evil/post-init-elfeed ()
+  (spacemacs|define-custom-layout "@Feeds"
+    :binding "f"
+    :body
+    (progn
+      (elfeed)
+      (elfeed-update)))
 )
 
 (defun custom-config-evil/init-rainbow-identifiers ()
