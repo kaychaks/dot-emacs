@@ -58,7 +58,7 @@
                                 ;;          (expand-file-name (concat "plan-"
                                 ;;                                    (format-time-string "%Y-%m-%d")
                                 ;;                                    ".org")
-                                ;;                            "~/Documents/Org-Notes/Plans/")))
+                                ;;                            "~/Documents/notes/Plans/")))
                                 ;;  "#+FILETAGS: planning daily\n* %^{item}\n  %^{date}T\n  - %?\n")
 
                                 ("t" "new todo"
@@ -104,20 +104,15 @@
 
 (defun custom-config-org/post-init-org ()
   (setq
-        ;; org-directory "/Users/kaushik/Documents/Org-Notes/"
-        org-directory "~/Document/org-notes"
+        org-directory "~/Documents/notes"
 
-        ;; org-default-notes-file "/Users/kaushik/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/Org-Notes/todo.org"
-        org-default-notes-file (concat org-directory "/todo.org")
+        org-default-notes-file (cond ((string-equal system-type "darwin")
+                                      "/Users/kaushik/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/Org-Notes/todo.org")
+                                     (t (concat org-directory "/todo.org")))
 
-        ;; org-agenda-files '(
-        ;;                    "/Users/kaushik/Documents/Org-Notes/"
-        ;;                    "/Users/kaushik/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/Org-Notes/todo.org"
-        ;;                    )
-
-        org-agenda-files '(
-                           (org-directory)
-                           (org-default-notes-file)
+        org-agenda-files (list
+                           org-directory
+                           org-default-notes-file
                            )
         org-todo-keywords '((sequence
                              "TODO(t)"

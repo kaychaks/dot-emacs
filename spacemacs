@@ -90,9 +90,7 @@ This function should only modify configuration layer settings."
    ;; '(your-package :location "~/path/to/your-package/")
    ;; Also include the dependencies as they will not be resolved automatically.
    dotspacemacs-additional-packages
-   '(
-     ;; direnv
-     )
+   '()
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages
    '()
@@ -214,8 +212,9 @@ It should only modify the values of Spacemacs settings."
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
    dotspacemacs-default-font
-   '("SF Mono" 
-     ;; :size 16
+   `("SF Mono" 
+    ,(if (string-equal system-type "darwin") :size);; :size 16
+    ,(if (string-equal system-type "darwin") 16);; :size 16
      :weight normal
      :width normal
      :powerline-scale 1.1
