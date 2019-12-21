@@ -30,7 +30,18 @@ This function should only modify configuration layer settings."
    dotspacemacs-configuration-layers
    '(
         osx
-        javascript
+        (javascript :variables
+                    javascript-backend 'lsp
+                    javascript-lsp-linter nil
+                    javascript-fmt-tool 'prettier
+                    javascript-fmt-on-save t
+                    js2-basic-offset 2
+                    js-indent-level 2
+                    javascript-repl `nodejs)
+        (typescript :variables
+                    typescript-fmt-on-save t
+                    typescript-fmt-tool 'prettier
+                    typescript-linter 'eslint)
      	  html
         helm
         syntax-checking
@@ -57,7 +68,7 @@ This function should only modify configuration layer settings."
         python
         yaml
         shell-scripts
-        ;; lsp
+        lsp
         (haskell :variables
                  haskell-completion-backend 'dante
                  haskell-enable-ghc-mod-support nil
@@ -72,6 +83,8 @@ This function should only modify configuration layer settings."
 
         (elfeed :variables
                 rmh-elfeed-org-files (list "~/.local/share/spacemacs/private/elfeed-feedly.org"))
+        (restclient :variables
+                    restclient-use-org t)
 
         ;; all private layers
         custom-lean
