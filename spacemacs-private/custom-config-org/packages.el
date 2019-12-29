@@ -35,13 +35,16 @@
 
 (defun custom-config-org/org-capture-templates ()
   (setq org-capture-templates '(
-                                ;; ("m" "micro blog"
-                                ;;  plain
-                                ;;  (file (lambda ()
-                                ;;          (expand-file-name (concat (format-time-string "%Y%m%d%H%M%S")
-                                ;;                                    ".md")
-                                ;;                            "~/Developer/src/personal/blog-hakyll/micro-posts/")))
-                                ;;  "---\npublished : %<%Y-%m-%d %H:%M:%S%z>\n---\n\n%c%?")
+                                ("m" "micro blog"
+                                 plain
+                                 (file (lambda ()
+                                         (expand-file-name (concat (format-time-string "%Y%m%d%H%M%S")
+                                                                   ".md")
+                                                           (cond ((string-equal system-type "darwin")
+                                                                  "~/Developer/src/personal/blog-hakyll/micro-posts/")
+                                                                 (t "~/src/blog/micro-posts/")))
+                                         ))
+                                 "---\npublished : %<%Y-%m-%d %H:%M:%S%z>\n---\n\n%?")
 
                                 ("n" "new note"
                                  item
