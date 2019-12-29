@@ -225,9 +225,10 @@ It should only modify the values of Spacemacs settings."
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
    dotspacemacs-default-font
-   `("SF Mono" 
-    ,(if (string-equal system-type "darwin") :size);; :size 16
-    ,(if (string-equal system-type "darwin") 16);; :size 16
+   `("SF Mono"
+    ;; ,(if (string-equal system-type "darwin") :size);; :size 16
+    ;; ,(if (string-equal system-type "darwin") 16);; :size 16
+    ;; :size 20
      :weight normal
      :width normal
      :powerline-scale 1.1
@@ -510,7 +511,7 @@ This function is called at the very end of Spacemacs initialization."
     ("+c" "-Wall" "-ferror-spans" "-fdefer-typed-holes" "-fdefer-type-errors" "-fno-diagnostics-show-caret")))
  '(dante-methods
    (quote
-    (new-build new-impure-nix new-nix nix impure-nix nix-ghci stack mafia bare-cabal bare-ghci styx)))
+    (new-impure-nix new-nix nix-ghci nix nix-build)))
  '(dante-tap-type-time 2)
  '(evil-want-Y-yank-to-eol nil)
  '(haskell-compile-cabal-build-alt-command
