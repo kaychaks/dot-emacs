@@ -76,7 +76,6 @@ This function should only modify configuration layer settings."
         ;;          haskell-process-type 'cabal-new-repl)
 
         (haskell :variables
-                 haskell-process-type 'cabal-new-repl
                  haskell-completion-backend 'lsp
                  )
 
@@ -108,10 +107,7 @@ This function should only modify configuration layer settings."
    ;; '(your-package :location "~/path/to/your-package/")
    ;; Also include the dependencies as they will not be resolved automatically.
    dotspacemacs-additional-packages
-   '(
-     ;; nix-sandbox
-     ;; (lsp-haskell :location (recipe :fetcher github :repo "emacs-lsp/lsp-haskell"))
-     )
+   '()
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages
    '()
@@ -126,7 +122,7 @@ This function should only modify configuration layer settings."
    ;; installs *all* packages supported by Spacemacs and never uninstalls them.
    ;; (default is `used-only')
    dotspacemacs-install-packages
-   'used-only))
+   'used-but-keep-unused))
 
 (defun dotspacemacs/init ()
   "Initialization:
@@ -575,7 +571,27 @@ This function is called at the very end of Spacemacs initialization."
  ;; '(haskell-hoogle-command "nil")
  ;; '(haskell-process-suggest-hoogle-imports nil)
  ;; '(haskell-stylish-on-save t)
- ;; '(flycheck-haskell-runghc-command (quote ("nix-shell" "--command" "\"runghc -i\"")))
+ '(flycheck-haskell-runghc-command (quote ("nix-shell" "--command" "\"runghc -i\"")))
+ '(haskell-hoogle-url "http://localhost:8080/?hoogle=%s")
+
+ '(lsp-haskell-process-args-hie '())
+ '(lsp-haskell-process-path-hie "ghcide")
+
+ '(lsp-haskell-process-wrapper-function
+   (lambda
+     (argv)
+     (append
+      (append
+       (list "nix-shell" "-I" "." "--command")
+       (list
+        (mapconcat
+         (quote identity)
+         argv " ")))
+      (list
+       (concat
+        (lsp-haskell--get-root)
+        "shell.nix")))))
+
  '(package-selected-packages
    (quote
     (direnv reveal-in-osx-finder osx-trash osx-dictionary osx-clipboard launchctl treemacs-projectile treemacs-evil treemacs org-download org-brain nix-mode hlint-refactor eyebrowse evil-visual-mark-mode evil-nerd-commenter evil-magit eval-sexp-fu editorconfig doom-modeline eldoc-eval define-word dante cython-mode aggressive-indent ace-link anaconda-mode ivy smartparens goto-chg company window-purpose imenu-list helm helm-core flycheck avy projectile magit f simple-httpd powerline visual-fill-column yasnippet-snippets yapfify yaml-mode xterm-color ws-butler writeroom-mode winum which-key web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package unfill toc-org tagedit symon super-save string-inflection spaceline-all-the-icons smeargle slim-mode shrink-path shell-pop scss-mode sass-mode restart-emacs rainbow-delimiters pyvenv pytest pyenv-mode py-isort pug-mode prettier-js popwin pippel pipenv pip-requirements pfuture persp-mode pcre2el password-generator paradox pandoc-mode ox-pandoc overseer orgit org-projectile org-present org-pomodoro org-mime org-bullets open-junk-file nameless mwim multi-term move-text mmm-mode material-theme markdown-toc magit-svn magit-gitflow macrostep lorem-ipsum livid-mode live-py-mode link-hint lcr json-navigator json-mode js2-refactor js-doc insert-shebang indent-guide importmagic impatient-mode hungry-delete hl-todo hindent highlight-parentheses highlight-numbers highlight-indentation highlight helm-xref helm-themes helm-swoop helm-pydoc helm-purpose helm-projectile helm-org-rifle helm-mode-manager helm-make helm-lean helm-hoogle helm-gitignore helm-git-grep helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag haskell-snippets haskell-mode google-translate golden-ratio gnuplot gitignore-templates gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-commit gh-md fuzzy font-lock+ flyspell-correct-helm flycheck-bashate flx-ido fish-mode fill-column-indicator fancy-battery expand-region evil-visualstar evil-unimpaired evil-tutor evil-surround evil-org evil-numbers evil-matchit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu eshell-z eshell-prompt-extras esh-help emmet-mode elisp-slime-nav dumb-jump dotenv-mode diminish counsel-projectile company-web company-tern company-statistics company-shell company-lean company-cabal company-auctex company-anaconda column-enforce-mode color-theme-sanityinc-solarized cmm-mode clean-aindent-mode centered-cursor-mode auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile ace-window ace-jump-helm-line ac-ispell))))
