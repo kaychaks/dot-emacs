@@ -54,9 +54,9 @@
     (progn
       ;; (find-file "~/Developer/src/personal/nix-config/darwin.nix")
       ;; (find-file-other-window "~/Developer/src/personal/nixpkgs/pkgs/top-level/all-packages.nix")))
-      (find-file (cond ((string-equal system-type "darwin") "~/Developer/src/personal/nix-config/mac/home.nix")
+      (find-file (cond ((string-equal system-type "darwin") "~/developer/src/personal/nix-config/mac/home.nix")
                        (t "~/src/ops/nix-config/precision/home.nix")))
-      (find-file-other-window (cond ((string-equal system-type "darwin") "~/Developer/src/personal/nix-config/mac/darwin.nix")
+      (find-file-other-window (cond ((string-equal system-type "darwin") "~/developer/src/personal/nix-config/mac/darwin.nix")
                                     (t "~/src/ops/nix-config/precision/default.nix")))
       )
     )
