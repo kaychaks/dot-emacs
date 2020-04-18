@@ -88,7 +88,6 @@
         org-todo-repeat-to-state "TODO"
         org-pretty-entities t
         org-use-tag-inheritance nil
-
         org-agenda-ndays 1
         org-agenda-show-all-dates t
         org-agenda-start-on-weekday nil
@@ -205,6 +204,13 @@
 ;; projectile
 (setq projectile-project-search-path '("~/developer/src/personal/"
                                        "~/developer/src/work/"))
+
+(use-package! super-save
+  :config
+  (super-save-mode +1)
+  (setq auto-save-default nil)
+  (setq super-save-remote-files nil)
+  (setq super-save-auto-save-when-idle t))
 
 ;; Haskell
 (setq haskell-process-type 'cabal-new-repl
