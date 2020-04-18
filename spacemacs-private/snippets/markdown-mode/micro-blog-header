@@ -1,9 +1,0 @@
-# -*- mode: snippet -*-
-# name: micro blog header
-# key: mbh
-# --
----
-published : `(format-time-string "%Y-%m-%d %H:%M:%S%z")`
----
-
-$0
