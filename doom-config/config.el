@@ -7,7 +7,7 @@
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
 ;; clients, file templates and snippets.
 (setq user-full-name "Kaushik Chakraborty"
-      user-mail-address "kaushik.chakraborty3@cognizant.com")
+      user-mail-address (if (string-equal system-type "darwin") "kaushik.chakraborty3@cognizant.com" "git@kaushikc.org"))
 
 ;; Doom exposes five (optional) variables for controlling fonts in Doom. Here
 ;; are the three important ones:
@@ -56,7 +56,7 @@
 (set-popup-rule! "^\\*Org Agenda" :ignore t)
 
 (after! org
-  (setq org-directory "~/developer/src/personal/notes"
+  (setq org-directory (cond ((string-equal system-type "darwin") "~/developer/src/personal/notes")(t "~/Documents/notes"))
         org-default-notes-file (concat org-directory "/inbox.org")
         org-agenda-files (list
                           org-directory
@@ -108,7 +108,7 @@
               (file (lambda ()
                       (expand-file-name (concat (format-time-string "%Y%m%d%H%M%S")
                                                 ".md")
-                                        "~/developer/src/personal/blog/micro-posts/")))
+                                        (cond ((string-equal system-type "darwin") "~/developer/src/personal/blog/micro-posts/") (t "~/src/blog/micro-posts")))))
               "---\npublished : %<%Y-%m-%d %H:%M:%S%z>\n---\n\n%c%?")
 
             ("n" "New Note"
@@ -202,8 +202,16 @@
 (setq display-line-numbers-type t)
 
 ;; projectile
-(setq projectile-project-search-path '("~/developer/src/personal/"
-                                       "~/developer/src/work/"))
+(setq projectile-project-search-path (cond ((string-equal system-type "darwin")
+                                            '(
+                                              "~/developer/src/personal/"
+                                              "~/developer/src/work/"))
+                                           (t '(
+                                                "~/src"
+                                                "~/src/repo"
+                                                "~/src/ops"
+                                                "~/src/projects"
+                                                "~/src/learn"))))
 
 (use-package! super-save
   :config
