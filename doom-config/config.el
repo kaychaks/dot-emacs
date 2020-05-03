@@ -26,6 +26,10 @@
 ;; `load-theme' function. This is the default:
 (setq doom-theme 'doom-one)
 
+(setq-default indent-tabs-mode nil)
+(setq-default tab-width 2)
+(setq indent-line-function 'insert-tab)
+
 
 (add-to-list 'default-frame-alist '(inhibit-double-buffering . t))
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
@@ -56,11 +60,10 @@
 (set-popup-rule! "^\\*Org Agenda" :ignore t)
 
 (after! org
-  (setq org-directory (cond ((string-equal system-type "darwin") "~/developer/src/personal/notes")(t "~/Documents/notes"))
-        org-default-notes-file (concat org-directory "/inbox.org")
+  (setq org-directory (if (string-equal system-type "darwin") "~/developer/src/personal/notes" "~/Documents/notes")
+        org-default-notes-file (concat (if (string-equal system-type "darwin") "~/developer/src/personal/notes" "~/Documents/notes") "/inbox.org")
         org-agenda-files (list
-                          org-directory
-                          )
+                          (if (string-equal system-type "darwin") "~/developer/src/personal/notes" "~/Documents/notes"))
         org-todo-keywords '((sequence
                              "TODO(t)"
                              "RECUR(R)"
@@ -88,52 +91,53 @@
         org-todo-repeat-to-state "TODO"
         org-pretty-entities t
         org-use-tag-inheritance nil
-        org-agenda-ndays 1
-        org-agenda-show-all-dates t
+        ;; org-agenda-ndays 1
+        ;; org-agenda-show-all-dates t
         org-agenda-start-on-weekday nil
-        org-agenda-tags-column -100
+        ;; org-agenda-tags-column -100
 
         org-archive-location "TODO-archive::"
-        org-archive-save-context-info (quote (time category itags)))
+        ;; org-archive-save-context-info (quote (time category itags))
+        )
 
   (setq org-capture-templates
         '(
           ("a" "Add Task"
-              entry
-              (file (lambda () (concat org-directory "/inbox.org")))
-              "* TODO %?\n:PROPERTIES:\n:ID: %(shell-command-to-string \"uuidgen\"):CREATED: %U\n:END:" :prepend t)
+           entry
+           (file (lambda () (concat org-directory "/inbox.org")))
+           "* TODO %?\n:PROPERTIES:\n:ID: %(shell-command-to-string \"uuidgen\"):CREATED: %U\n:END:" :prepend t)
 
-            ("m" "New Micro Blog"
-              plain
-              (file (lambda ()
-                      (expand-file-name (concat (format-time-string "%Y%m%d%H%M%S")
-                                                ".md")
-                                        (cond ((string-equal system-type "darwin") "~/developer/src/personal/blog/micro-posts/") (t "~/src/blog/micro-posts")))))
-              "---\npublished : %<%Y-%m-%d %H:%M:%S%z>\n---\n\n%c%?")
+          ("m" "New Micro Blog"
+           plain
+           (file (lambda ()
+                   (expand-file-name (concat (format-time-string "%Y%m%d%H%M%S")
+                                             ".md")
+                                     (if (string-equal system-type "darwin") "~/developer/src/personal/blog/micro-posts/" "~/src/blog/micro-posts"))))
+           "---\npublished : %<%Y-%m-%d %H:%M:%S%z>\n---\n\n%c%?")
 
-            ("n" "New Note"
-              entry
-              (file (lambda() (concat org-directory "/notes.org") ))
-              "* NOTE %?\n:PROPERTIES:\n:ID: %(shell-command-to-string \"uuidgen\"):CREATED: %U\n:END:" :prepend t)
+          ("n" "New Note"
+           entry
+           (file (lambda() (concat org-directory "/notes.org") ))
+           "* NOTE %?\n:PROPERTIES:\n:ID: %(shell-command-to-string \"uuidgen\"):CREATED: %U\n:END:" :prepend t)
 
             ;;;
             ;;; FROM DOOM DEFAULT TEMPLATES
             ;;;
 
-            ;; Will use {project-root}/{todo,notes,changelog}.org, unless a
-            ;; {todo,notes,changelog}.org file is found in a parent directory.
-            ;; Uses the basename from `+org-capture-todo-file',
-            ;; `+org-capture-changelog-file' and `+org-capture-notes-file'.
-            ("p" "Templates for projects")
-            ("pt" "Project-local todo" entry  ; {project-root}/todo.org
-            (file+headline +org-capture-project-todo-file "Inbox")
-            "* TODO %?\n%i\n%a" :prepend t)
-            ("pn" "Project-local notes" entry  ; {project-root}/notes.org
-            (file+headline +org-capture-project-notes-file "Inbox")
-            "* %U %?\n%i\n%a" :prepend t)
-            ("pc" "Project-local changelog" entry  ; {project-root}/changelog.org
-            (file+headline +org-capture-project-changelog-file "Unreleased")
-            "* %U %?\n%i\n%a" :prepend t))
+          ;; Will use {project-root}/{todo,notes,changelog}.org, unless a
+          ;; {todo,notes,changelog}.org file is found in a parent directory.
+          ;; Uses the basename from `+org-capture-todo-file',
+          ;; `+org-capture-changelog-file' and `+org-capture-notes-file'.
+          ("p" "Templates for projects")
+          ("pt" "Project-local todo" entry  ; {project-root}/todo.org
+           (file+headline +org-capture-project-todo-file "Inbox")
+           "* TODO %?\n%i\n%a" :prepend t)
+          ("pn" "Project-local notes" entry  ; {project-root}/notes.org
+           (file+headline +org-capture-project-notes-file "Inbox")
+           "* %U %?\n%i\n%a" :prepend t)
+          ("pc" "Project-local changelog" entry  ; {project-root}/changelog.org
+           (file+headline +org-capture-project-changelog-file "Unreleased")
+           "* %U %?\n%i\n%a" :prepend t))
         )
 
   (setq org-agenda-custom-commands
@@ -173,27 +177,28 @@
               (user-defined-up)))
             (org-agenda-prefix-format "%-11c%5(org-todo-age) ")))
           ("U" "Deferred tasks" tags "TODO=\"DEFERRED\""
-            ((org-agenda-overriding-header "Deferred tasks:")
+           ((org-agenda-overriding-header "Deferred tasks:")
             (org-agenda-sorting-strategy
-              (quote
+             (quote
               (user-defined-up)))
             (org-agenda-prefix-format "%-11c%5(org-todo-age) ")))
           ("Y" "Someday tasks" tags "TODO=\"SOMEDAY\""
-            ((org-agenda-overriding-header "Someday tasks:")
+           ((org-agenda-overriding-header "Someday tasks:")
             (org-agenda-sorting-strategy
-              (quote
+             (quote
               (user-defined-up)))
             (org-agenda-prefix-format "%-11c%5(org-todo-age) ")))
           ("S" "Scheduled tasks" tags "TODO<>\"\"&TODO<>{DONE\\|CANCELLED\\|NOTE\\|PROJECT\\|DEFERRED}&STYLE<>\"habit\""
-            ((org-agenda-overriding-header "Scheduled tasks: ")
+           ((org-agenda-overriding-header "Scheduled tasks: ")
             (org-agenda-skip-function
-              (quote
+             (quote
               (org-agenda-skip-entry-if
-                (quote notscheduled))))
+               (quote notscheduled))))
             (org-agenda-sorting-strategy
-              (quote
+             (quote
               (category-up)))))
-          ))))
+          )))
+  )
 
 
 
@@ -202,23 +207,41 @@
 (setq display-line-numbers-type t)
 
 ;; projectile
-(setq projectile-project-search-path (cond ((string-equal system-type "darwin")
-                                            '(
-                                              "~/developer/src/personal/"
-                                              "~/developer/src/work/"))
-                                           (t '(
-                                                "~/src"
-                                                "~/src/repo"
-                                                "~/src/ops"
-                                                "~/src/projects"
-                                                "~/src/learn"))))
+(setq projectile-project-search-path (if (string-equal system-type "darwin")
+                                         '(
+                                           "~/developer/src/personal/"
+                                           "~/developer/src/work/")
+                                       '(
+                                         "~/src"
+                                         "~/src/repo"
+                                         "~/src/ops"
+                                         "~/src/projects"
+                                         "~/src/learn")))
 
 (use-package! super-save
   :config
   (super-save-mode +1)
   (setq auto-save-default nil)
   (setq super-save-remote-files nil)
-  (setq super-save-auto-save-when-idle t))
+  (setq super-save-auto-save-when-idle t)
+
+  (dolist (item '(evil-switch-to-windows-last-buffer
+                   counsel-projectile-switch-to-buffer
+                   magit
+                   magit-status
+                   treemacs
+                   ace-window
+                   persp-switch
+                   dired-jump
+                   dired-jump-other-window
+                   +default/search-project
+                   find-file
+                   ivy
+                   evil-insert-state-exit-hook
+                   switch-to-buffer
+                   focus-out-hook))
+    (add-to-list 'super-save-triggers item))
+  )
 
 ;; Haskell
 (setq haskell-process-type 'cabal-new-repl
