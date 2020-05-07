@@ -159,7 +159,7 @@
               (org-agenda-skip-entry-if
                (quote regexp)
                "\\=.*\\[#C\\]")))))
-          ("u" "Unscheduled tasks" tags "TODO<>\"\"&TODO<>{DONE\\|CANCELLED\\|DEFERRED\\|SOMEDAY\\|PROJECT\\|NOTE}"
+          ("u" "Unscheduled tasks" tags "TODO<>\"\"&TODO<>{RECUR\\|DONE\\|CANCELLED\\|DEFERRED\\|SOMEDAY\\|PROJECT\\|NOTE}"
            ((org-agenda-overriding-header "Unscheduled tasks: ")
             (org-agenda-skip-function
              (quote
@@ -184,7 +184,7 @@
               (quote
               (user-defined-up)))
             (org-agenda-prefix-format "%-11c%5(org-todo-age) ")))
-          ("S" "Scheduled tasks" tags "TODO<>\"\"&TODO<>{DONE\\|CANCELLED\\|NOTE\\|PROJECT\\|DEFERRED}&STYLE<>\"habit\""
+          ("S" "Scheduled tasks" tags "TODO<>\"\"&TODO<>{RECUR\\|DONE\\|CANCELLED\\|NOTE\\|PROJECT\\|DEFERRED}&STYLE<>\"habit\""
             ((org-agenda-overriding-header "Scheduled tasks: ")
             (org-agenda-skip-function
               (quote
