@@ -220,7 +220,6 @@
 
 (use-package! super-save
   :config
-  (super-save-mode +1)
   (setq auto-save-default nil)
   (setq super-save-remote-files nil)
   (setq super-save-auto-save-when-idle t)
@@ -241,6 +240,7 @@
                    switch-to-buffer
                    focus-out-hook))
     (add-to-list 'super-save-triggers item))
+  (super-save-mode +1)
   )
 
 ;; Haskell
