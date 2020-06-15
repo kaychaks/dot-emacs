@@ -59,6 +59,7 @@
 
 (set-popup-rule! "^\\*Org Agenda" :ignore t)
 
+
 (after! org
   (setq org-directory (if (string-equal system-type "darwin") "~/developer/src/personal/notes" "~/Documents/notes")
         org-default-notes-file (concat (if (string-equal system-type "darwin") "~/developer/src/personal/notes" "~/Documents/notes") "/inbox.org")
@@ -99,6 +100,8 @@
         org-archive-location "TODO-archive::"
         ;; org-archive-save-context-info (quote (time category itags))
         )
+  (setq org-roam-directory (concat org-directory "/zettels/")
+        org-roam-link-title-format "%s")
 
   (setq org-capture-templates
         '(
@@ -139,6 +142,25 @@
            (file+headline +org-capture-project-changelog-file "Unreleased")
            "* %U %?\n%i\n%a" :prepend t))
         )
+
+  (setq org-roam-capture-templates
+        '(
+          ("z" "New Zettel"
+           plain
+           (function org-roam--capture-get-point)
+           "%?"
+           :file-name "%<%Y%m%d%H%M%S>-${slug}"
+           :head "#+TITLE: ${title}\n#+roam_tags: \n:PROPERTIES:\n:ID: %(shell-command-to-string \"uuidgen\")\n:CREATED: %U\n:TITLE: ${title}\n:STYLE: zettel\n:END:\n\n** Tags:: \n"
+           :unarrowed t)
+          ))
+  (setq org-roam-capture-ref-templates
+        '(("r" "Ref" plain (function org-roam--capture-get-point)
+           "%?"
+           :file-name "${slug}"
+           :head "#+ROAM_KEY: ${ref}\n#+TITLE: ${title}\n:PROPERTIES:\n:ID: %(shell-command-to-string \"uuidgen\")\n:CREATED: %U\n:TITLE: ${title}\n:STYLE: zettel\n:END:\n\n** Tags:: [[file:captures.org][captures]]\n"
+          :unnarrowed t)))
+
+  (setq org-noter-notes-search-path (list (concat org-directory "/zettels/")))
 
   (setq org-agenda-custom-commands
         (quote
@@ -200,7 +222,26 @@
           )))
   )
 
+(use-package! org-roam
+  :commands (org-roam-insert org-roam-find-file org-roam-switch-to-buffer org-roam)
+  :hook
+  (after-init . org-roam-mode)
+  :custom-face
+  (org-roam-link ((t (:inherit org-link :foreground "#5afc03")))))
 
+(defun my-org-protocol-focus-advice (orig &rest args)
+  (x-focus-frame nil)
+  (apply orig args))
+
+(advice-add 'org-roam-protocol-open-ref :around
+            #'my-org-protocol-focus-advice)
+(advice-add 'org-roam-protocol-open-file :around
+            #'my-org-protocol-focus-advice)
+
+(after! deft
+       (setq deft-directory org-directory
+             deft-recursive t
+             deft-org-mode-title-prefix t))
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
