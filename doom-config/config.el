@@ -123,9 +123,9 @@
            (file (lambda() (concat org-directory "/notes.org") ))
            "* NOTE %?\n:PROPERTIES:\n:ID: %(shell-command-to-string \"uuidgen\"):CREATED: %U\n:END:" :prepend t)
 
-            ;;;
-            ;;; FROM DOOM DEFAULT TEMPLATES
-            ;;;
+          ;;;
+          ;;; FROM DOOM DEFAULT TEMPLATES
+          ;;;
 
           ;; Will use {project-root}/{todo,notes,changelog}.org, unless a
           ;; {todo,notes,changelog}.org file is found in a parent directory.
