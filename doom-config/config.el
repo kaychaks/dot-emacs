@@ -100,6 +100,7 @@
         org-archive-location "TODO-archive::"
         ;; org-archive-save-context-info (quote (time category itags))
         )
+  ;; (add-hook 'org-capture-mode-hook #'org-align-all-tags)
   (setq org-roam-directory (concat org-directory "/zettels/")
         org-roam-link-title-format "%s")
 
@@ -108,7 +109,12 @@
           ("a" "Add Task"
            entry
            (file (lambda () (concat org-directory "/inbox.org")))
-           "* TODO %?\n:PROPERTIES:\n:ID: %(shell-command-to-string \"uuidgen\"):CREATED: %U\n:END:" :prepend t)
+           "* TODO %^{Add task}\n:PROPERTIES:\n:ID: %(shell-command-to-string \"uuidgen\"):CREATED: %U\n:END:" :prepend t)
+
+          ("w" "Add Work Task"
+           entry
+           (file (lambda () (concat org-directory "/inbox.org")))
+           "* TODO  %^{Add work task} :workday:\n:PROPERTIES:\n:ID: %(shell-command-to-string \"uuidgen\"):CREATED: %U\n:END:\nSCHEDULED: %t" :prepend t)
 
           ("m" "New Micro Blog"
            plain
@@ -198,6 +204,11 @@
              (quote
               (user-defined-up)))
             (org-agenda-prefix-format "%-11c%5(org-todo-age) ")))
+          ("w" "Work Day Tasks" tags-todo "workday"
+            (
+              (org-agenda-span (quote day))
+              (org-agenda-overriding-header "Today's Work Tasks")
+            ))
           ("U" "Deferred tasks" tags "TODO=\"DEFERRED\""
            ((org-agenda-overriding-header "Deferred tasks:")
             (org-agenda-sorting-strategy
