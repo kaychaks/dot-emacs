@@ -121,7 +121,7 @@
            (file (lambda ()
                    (expand-file-name (concat (format-time-string "%Y%m%d%H%M%S")
                                              ".md")
-                                     (if (string-equal system-type "darwin") "~/developer/src/personal/blog/micro-posts/" "~/src/blog/micro-posts"))))
+                                     (if (string-equal system-type "darwin") "~/developer/src/personal/blog/public/micro-posts/" "~/src/blog/public/micro-posts"))))
            "---\npublished : %<%Y-%m-%d %H:%M:%S%z>\n---\n\n%c%?")
 
           ("n" "New Note"
