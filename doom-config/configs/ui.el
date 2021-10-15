@@ -26,4 +26,7 @@
 ;; start maximised
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
+;; add a bit of transparency
+(doom/set-frame-opacity 95)
+
 ;;; ui.el ends here
