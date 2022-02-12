@@ -12,6 +12,7 @@
 (load! "configs/projects.el")
 (load! "configs/js.el")
 (load! "configs/haskell.el")
+(load! "configs/rust.el")
 
 ;; keybindings
 

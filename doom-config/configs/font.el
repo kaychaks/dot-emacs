@@ -26,8 +26,7 @@
 ;;
 ;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
 ;; font string. You generally only need these two:
-(setq doom-font (font-spec :family "PragmataPro Liga" :weight 'regular)
-      doom-variable-pitch-font (font-spec :family "PragmataPro Liga" :weight 'light))
-
+(setq doom-font (font-spec :family "PragmataPro Liga" :weight 'regular :size 16)
+      doom-variable-pitch-font (font-spec :family "PragmataPro" :weight 'light :size 16))
 
 ;;; font.el ends here
